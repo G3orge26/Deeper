@@ -1,0 +1,461 @@
+[gd_scene load_steps=29 format=2]
+
+[ext_resource path="res://Assets/Robot3.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Player/Player.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Arms-sheet.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Particles/Exhaust-Smoke.tscn" type="PackedScene" id=4]
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 20.0
+height = 22.0
+
+[sub_resource type="Animation" id=2]
+resource_name = "Idle"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.3, 0.5, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="CircleShape2D" id=28]
+radius = 4.0
+
+[sub_resource type="Animation" id=5]
+resource_name = "Drill"
+length = 0.2
+loop = true
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Arms:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.09, 0.17 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 5, 6, 7 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Arms2:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.09, 0.17 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 5, 6, 7 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Arms2/Area2D/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.18 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Arms2/Area2D/CollisionShape2D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Extend"
+length = 0.26
+step = 0.06
+tracks/0/type = "value"
+tracks/0/path = NodePath("Arms:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.06, 0.12, 0.18, 0.24 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Arms2:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.06, 0.12, 0.18, 0.24 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "\"Extend\"" ],
+"method": "_on_AnimationArms_animation_changed"
+} ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Idle"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Arms:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Arms2:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "\"Idle\"" ],
+"method": "_on_AnimationArms_animation_changed"
+} ]
+}
+
+[sub_resource type="Animation" id=27]
+resource_name = "Post-Drill"
+
+[sub_resource type="Animation" id=21]
+resource_name = "Pre-Drill"
+length = 0.02
+step = 0.02
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "\"Drill\"" ],
+"method": "_on_AnimationArms_animation_changed"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite/Exhaust_SmokeHeavy:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Arms:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Arms2:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "Retract"
+length = 0.26
+step = 0.06
+tracks/0/type = "value"
+tracks/0/path = NodePath("Arms2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.06, 0.12, 0.18, 0.24 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 3, 2, 1, 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Arms:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.06, 0.12, 0.18, 0.24 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 3, 2, 1, 0 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "\"Retract\"" ],
+"method": "_on_AnimationArms_animation_changed"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Arms2/Area2D/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Arms2/Area2D/CollisionShape2D:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sprite/Exhaust_SmokeHeavy:emitting")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=22]
+animation = "Drill"
+
+[sub_resource type="AnimationNodeAnimation" id=11]
+animation = "Extend"
+
+[sub_resource type="AnimationNodeAnimation" id=12]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=23]
+animation = "Pre-Drill"
+
+[sub_resource type="AnimationNodeAnimation" id=13]
+animation = "Retract"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=26]
+
+[sub_resource type="AnimationNodeStateMachine" id=19]
+states/Drill/node = SubResource( 22 )
+states/Drill/position = Vector2( 333.138, 89.1728 )
+states/Extend/node = SubResource( 11 )
+states/Extend/position = Vector2( -84.8617, 89.1728 )
+states/Idle/node = SubResource( 12 )
+states/Idle/position = Vector2( -262.862, 89.1728 )
+states/Pre-Drill/node = SubResource( 23 )
+states/Pre-Drill/position = Vector2( 100.138, 89.1728 )
+states/Retract/node = SubResource( 13 )
+states/Retract/position = Vector2( -38.8617, 296.173 )
+transitions = [ "Idle", "Extend", SubResource( 14 ), "Extend", "Retract", SubResource( 15 ), "Retract", "Idle", SubResource( 16 ), "Extend", "Pre-Drill", SubResource( 24 ), "Pre-Drill", "Drill", SubResource( 25 ), "Drill", "Retract", SubResource( 26 ) ]
+start_node = "Idle"
+graph_offset = Vector2( -697.862, -35.9735 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=20]
+
+[node name="Player" type="KinematicBody2D" groups=["Saveable"]]
+z_index = 2
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+z_index = 2
+texture = ExtResource( 1 )
+hframes = 6
+
+[node name="Exhaust_Smoke" parent="Sprite" instance=ExtResource( 4 )]
+visible = false
+position = Vector2( -33, 8 )
+emitting = false
+
+[node name="Exhaust_SmokeHeavy" parent="Sprite" instance=ExtResource( 4 )]
+position = Vector2( -33, 8 )
+emitting = false
+amount = 20
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 2, 4 )
+rotation = 1.5708
+shape = SubResource( 4 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.5, 0.5 )
+smoothing_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 1.2
+anims/Idle = SubResource( 2 )
+anims/RESET = SubResource( 3 )
+
+[node name="Arms" type="Sprite" parent="."]
+position = Vector2( -5, 10 )
+scale = Vector2( 0.75, 0.75 )
+z_index = 2
+texture = ExtResource( 3 )
+offset = Vector2( 20, 0 )
+hframes = 5
+vframes = 2
+
+[node name="Arms2" type="Sprite" parent="."]
+position = Vector2( 10, 10 )
+scale = Vector2( 0.75, 0.75 )
+z_index = 1
+texture = ExtResource( 3 )
+offset = Vector2( 20, 0 )
+hframes = 5
+vframes = 2
+
+[node name="Area2D" type="Area2D" parent="Arms2"]
+position = Vector2( 40, 0 )
+scale = Vector2( 1.33333, 1.33333 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arms2/Area2D"]
+visible = false
+shape = SubResource( 28 )
+disabled = true
+
+[node name="ColorRect" type="ColorRect" parent="Arms2/Area2D/CollisionShape2D"]
+visible = false
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 4.0
+margin_bottom = 4.0
+color = Color( 0.219608, 0.203922, 0.631373, 0.811765 )
+
+[node name="AnimationArms" type="AnimationPlayer" parent="."]
+anims/Drill = SubResource( 5 )
+anims/Extend = SubResource( 6 )
+anims/Idle = SubResource( 7 )
+anims/Post-Drill = SubResource( 27 )
+anims/Pre-Drill = SubResource( 21 )
+anims/RESET = SubResource( 8 )
+anims/Retract = SubResource( 9 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 19 )
+anim_player = NodePath("../AnimationArms")
+parameters/playback = SubResource( 20 )
+
+[connection signal="body_entered" from="Arms2/Area2D" to="." method="_on_Area2D_body_entered"]

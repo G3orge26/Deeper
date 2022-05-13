@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Drilling.mp3-e17d8507f78074419d9f5d1a0c04667e.mp3str"
+
+[deps]
+
+source_file="res://Assets/SFX/Drilling.mp3"
+dest_files=[ "res://.import/Drilling.mp3-e17d8507f78074419d9f5d1a0c04667e.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
