@@ -51,15 +51,18 @@ func load_game():
 		var node_data = parse_json(save_file.get_line())
 		var new_object = load(node_data["filename"]).instance()
 		get_node(node_data["parent"]).add_child(new_object)
-		new_object.position = Vector2(node_data["pos_x"], node_data["pos_y"])
+		if new_object.has_method("_load"):
+			new_object.call("_load", node_data)
+		#new_object.position = Vector2(node_data["pos_x"], node_data["pos_y"])
 		
-		for i in node_data.keys():
-			if i == "filename" or i == "parent" or i == "pos_x" or i == "pos_y":
-				continue
-			new_object.set(i, node_data[i])
-			if i == "map":
-				new_object.load(node_data[i])
-				#load_map(node_data[i])
+		#for i in node_data.keys():
+		#	if i == "filename" or i == "parent" or i == "pos_x" or i == "pos_y":
+		#		continue
+		#	if new_object.has_method("_load"):
+		#	new_object.set(i, node_data[i])
+		#	if i == "map":
+		#		new_object.load(node_data[i])
+		#		#load_map(node_data[i])
 			
 	save_file.close()
 

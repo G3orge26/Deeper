@@ -13,14 +13,25 @@ var ani_cur
 var gamemap
 var motion = Vector2()
 
+#Saveable Properties
 
-# Called when the node enters the scene tree for the first time.
+var HP = 200
+var MAX_HP = 200
+
+var FUEL = 150
+var MAX_FUEL = 150
+var fuel_consumpsion = 1
+var time = 0
+
 func _ready():
 	ani_fsm = $AnimationTree.get("parameters/playback")
 	$AnimationTree.active = true
 	ani_fsm.start("Idle")
 	gamemap = get_parent().get_node("Tilemap")
 	pass # Replace with function body.
+
+func update_fuel(delta):
+	FUEL = FUEL - (fuel_consumpsion * delta)
 
 func arms_aim():
 		$Arms.look_at(get_global_mouse_position())
@@ -86,6 +97,10 @@ func _physics_process(delta):
 	arms_aim()
 	handle_animation()
 	motion = move_and_slide(motion, UP)
+	if Input.is_action_just_pressed("Space"):
+		#HP = HP - 10
+		print(get("name"))
+	update_fuel(delta)
 
 func _on_AnimationArms_animation_changed(new_name):
 	ani_cur = new_name
@@ -105,9 +120,22 @@ func _save():
 		"filename" : get_filename(),
 		"parent" : get_parent().get_path(),
 		"pos_x" : position.x,
-		"pos_y" : position.y
+		"pos_y" : position.y,
+		"MAX_HP" : MAX_HP,
+		"HP" : HP,
+		"MAX_FUEL" : MAX_FUEL,
+		"FUEL" : FUEL,
+		"consumpsion" : fuel_consumpsion
 	}
 	return save_dict
 
-func _load():
-	pass
+func _load(data):
+	position.x = data.pos_x
+	position.y = data.pos_y
+	MAX_HP = data.MAX_HP
+	HP = data.HP
+	MAX_FUEL = data.MAX_FUEL
+	FUEL = data.FUEL
+	fuel_consumpsion = data.consumpsion
+	#var UI = get_parent().get_node("UI")
+	#UI.player_obj = self

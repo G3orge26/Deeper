@@ -46,11 +46,12 @@ func _save():
 	}
 	return save_dict
 	
-func load(tilemap):
-	var tiles = tilemap
+func _load(data):
+	
+	var tiles = data.map
 	for tile in tiles:
-		var data = tiles[tile]
-		set_cell(data.x, data.y, data.id)
+		var tl_data = tiles[tile]
+		set_cell(tl_data.x, tl_data.y, tl_data.id)
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
