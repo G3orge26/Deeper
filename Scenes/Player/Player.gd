@@ -23,11 +23,14 @@ var MAX_FUEL = 150
 var fuel_consumpsion = 1
 var time = 0
 
+var drill_power = 1
+var drill_speed = 0.2
+
 func _ready():
 	ani_fsm = $AnimationTree.get("parameters/playback")
 	$AnimationTree.active = true
 	ani_fsm.start("Idle")
-	gamemap = get_parent().get_node("Tilemap")
+	gamemap = get_parent().get_parent().get_node("TileMap").get_children()[0]
 	pass # Replace with function body.
 
 func update_fuel(delta):
@@ -109,11 +112,15 @@ func _on_AnimationArms_animation_changed(new_name):
 
 func _on_Area2D_body_entered(body):
 	if body.get_class() == "TileMap":
-		var cell = body.world_to_map($Arms2/Area2D/CollisionShape2D.global_position)
-		var cell_id = body.get_cellv(cell)
-		body.set_cellv(cell, 3)
+		var drill_coords = $Arms2/Area2D/CollisionShape2D.global_position
+		var power = drill_power * drill_speed
+		body.emit_signal("tile_drilled", drill_coords, power);
+		#body.set_cellv(cell, 3)
 		
 	pass # Replace with function body.
+
+func _on_Retract_clear_Map():
+	gamemap = get_parent().get_parent().get_node("TileMap").get_children()[0]
 
 func _save():
 	var save_dict = {
@@ -125,7 +132,8 @@ func _save():
 		"HP" : HP,
 		"MAX_FUEL" : MAX_FUEL,
 		"FUEL" : FUEL,
-		"consumpsion" : fuel_consumpsion
+		"consumpsion" : fuel_consumpsion,
+		"drill_power" : drill_power
 	}
 	return save_dict
 
@@ -137,5 +145,6 @@ func _load(data):
 	MAX_FUEL = data.MAX_FUEL
 	FUEL = data.FUEL
 	fuel_consumpsion = data.consumpsion
+	drill_power = data.drill_power
 	#var UI = get_parent().get_node("UI")
 	#UI.player_obj = self

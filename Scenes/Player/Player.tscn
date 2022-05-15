@@ -322,6 +322,20 @@ tracks/5/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/6/type = "method"
+tracks/6/path = NodePath(".")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_Retract_clear_Map"
+} ]
+}
 
 [sub_resource type="AnimationNodeAnimation" id=22]
 animation = "Drill"
