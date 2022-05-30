@@ -1,0 +1,21 @@
+{
+	"0": {
+		"name": "Grass",
+		"hp": 1
+	},
+	"1": {
+		"name": "Dirt",
+		"hp": 1.5
+	},
+	"2": {
+		"name": "Copper",
+		"hp": 2.5,
+		"weight": 2,
+		"yield_min": 10,
+		"yield_max": 100
+	},
+	"3": {
+		"name": "Stone",
+		"hp": 4
+	}
+}

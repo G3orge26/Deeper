@@ -13,6 +13,8 @@ var ani_cur
 var gamemap
 var motion = Vector2()
 
+signal block_destroyed(tid)
+
 #Saveable Properties
 
 var HP = 200
@@ -25,6 +27,10 @@ var time = 0
 
 var drill_power = 1
 var drill_speed = 0.2
+
+var cargo_max_weight = 500
+var cargo_weight = 0
+var cargo = {}
 
 func _ready():
 	ani_fsm = $AnimationTree.get("parameters/playback")
@@ -121,6 +127,7 @@ func _on_Area2D_body_entered(body):
 
 func _on_Retract_clear_Map():
 	gamemap = get_parent().get_parent().get_node("TileMap").get_children()[0]
+	gamemap.call("clearDmg")
 
 func _save():
 	var save_dict = {
@@ -133,7 +140,10 @@ func _save():
 		"MAX_FUEL" : MAX_FUEL,
 		"FUEL" : FUEL,
 		"consumpsion" : fuel_consumpsion,
-		"drill_power" : drill_power
+		"drill_power" : drill_power,
+		"cargo" : cargo,
+		"cargo_max_weight": cargo_max_weight,
+		"cargo_weight": cargo_weight
 	}
 	return save_dict
 
@@ -146,5 +156,48 @@ func _load(data):
 	FUEL = data.FUEL
 	fuel_consumpsion = data.consumpsion
 	drill_power = data.drill_power
-	#var UI = get_parent().get_node("UI")
-	#UI.player_obj = self
+	cargo = data.cargo
+	cargo_max_weight = data.cargo_max_weight
+	cargo_weight = data.cargo_weight
+
+
+func check_cargo_weight(loot):
+	# if loot to be added wont fit
+	if cargo_weight + (loot.x * loot.y) > cargo_max_weight:
+		# calculate remaining available cargo weight
+		var available_weight = cargo_max_weight - cargo_weight
+		# calculate loot quantity of remaining weight
+		var loot_quantity = available_weight / loot.y
+		
+		return Vector2(loot_quantity, available_weight)
+	
+	return Vector2(loot.x, loot.x * loot.y)
+
+func add_cargo_entry(loot, tid):
+	var goods = check_cargo_weight(loot)
+	cargo[str(tid)] = { "quantity" : goods.x, "weight" : goods.y}
+	cargo_weight += goods.y
+
+func update_cargo_entry(loot, tid):
+	var goods = check_cargo_weight(loot)
+	var cur_quantity = cargo[str(tid)]["quantity"]
+	var cur_weight = cargo[str(tid)]["weight"]
+	cur_quantity += goods.x
+	cur_weight += goods.y
+	cargo[str(tid)] = { "quantity" : cur_quantity, "weight" : cur_weight}
+	cargo_weight += goods.y
+
+# loot is a vec2. X contains quantity, Y contains wbase weight
+func update_cargo(loot, tid):
+	if cargo.has(str(tid)):
+		update_cargo_entry(loot, tid)
+	else:
+		add_cargo_entry(loot,tid)
+
+func _on_loot_block(tid):
+	var loot = GameData.get_loot(tid)
+	update_cargo(loot, tid)
+
+func _on_PlayerChar_block_destroyed(tid):
+	
+	pass # Replace with function body.
