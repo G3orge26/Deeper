@@ -19,6 +19,10 @@ config/icon="res://icon.png"
 GameData="*res://Scripts/GameData.gd"
 Common="*res://Scripts/Common.gd"
 
+[display]
+
+window/dpi/allow_hidpi=true
+
 [input]
 
 up={

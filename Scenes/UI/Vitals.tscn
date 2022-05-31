@@ -1,0 +1,63 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Assets/Themes/UI_Theme.tres" type="Theme" id=1]
+
+[node name="Vitals" type="PanelContainer"]
+self_modulate = Color( 0.756863, 0.964706, 1, 0.611765 )
+margin_right = 256.0
+margin_bottom = 96.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 249.0
+margin_bottom = 89.0
+
+[node name="Health_Label" type="Label" parent="VBoxContainer"]
+margin_right = 242.0
+margin_bottom = 14.0
+text = "Health"
+align = 1
+
+[node name="HP_bar" type="ProgressBar" parent="VBoxContainer"]
+margin_top = 18.0
+margin_right = 242.0
+margin_bottom = 38.0
+theme = ExtResource( 1 )
+step = 1.0
+value = 50.0
+percent_visible = false
+
+[node name="Label" type="Label" parent="VBoxContainer/HP_bar"]
+margin_left = 94.0
+margin_top = 3.0
+margin_right = 147.0
+margin_bottom = 17.0
+text = "100/100"
+align = 1
+valign = 1
+
+[node name="Fuel_Label" type="Label" parent="VBoxContainer"]
+margin_top = 42.0
+margin_right = 242.0
+margin_bottom = 56.0
+text = "Fuel"
+align = 1
+
+[node name="Fuel_bar" type="ProgressBar" parent="VBoxContainer"]
+margin_top = 60.0
+margin_right = 242.0
+margin_bottom = 80.0
+theme = ExtResource( 1 )
+step = 1.0
+value = 50.0
+percent_visible = false
+
+[node name="Label" type="Label" parent="VBoxContainer/Fuel_bar"]
+margin_left = 94.0
+margin_top = 3.0
+margin_right = 147.0
+margin_bottom = 17.0
+text = "100/100"
+align = 1
+valign = 1
