@@ -22,6 +22,8 @@ func _process(delta):
 		print(cargo)
 		print ($Player.get_child(0).cargo_weight)
 		print("done")
+		$UI/Inventory.visible = not $UI/Inventory.visible
+		print($UI/Inventory.visible)
 
 
 func save_game():
