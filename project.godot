@@ -16,6 +16,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
+Globals="*res://Scripts/Globals.gd"
 GameData="*res://Scripts/GameData.gd"
 Common="*res://Scripts/Common.gd"
 
@@ -63,6 +64,11 @@ F5={
 F6={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777249,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+Inventory={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":73,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 

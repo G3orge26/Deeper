@@ -13,8 +13,6 @@ var ani_cur
 var gamemap
 var motion = Vector2()
 
-signal block_destroyed(tid)
-
 #Saveable Properties
 
 var HP = 200
@@ -26,11 +24,17 @@ var fuel_consumpsion = 1
 var time = 0
 
 var drill_power = 1
-var drill_speed = 0.2
+var drill_speed = 0.5
 
 var cargo_max_weight = 500
 var cargo_weight = 0
 var cargo = {}
+
+func _unhandled_input(event):
+	if event.is_action_pressed("Lclick"):
+		ani_fsm.travel("Drill")
+	elif event.is_action_released("Lclick"):
+		ani_fsm.travel("Idle")
 
 func _ready():
 	ani_fsm = $AnimationTree.get("parameters/playback")
@@ -81,11 +85,10 @@ func handle_input():
 		# automatic slowing down
 		motion.x = lerp(motion.x, 0, 0.2)
 	
-	if Input.is_action_pressed("Lclick"):
-		ani_fsm.travel("Drill")
-		pass
-	elif Input.is_action_just_released("Lclick"):
-		ani_fsm.travel("Idle")
+#	if Input.is_action_pressed("Lclick"):
+#		ani_fsm.travel("Drill")
+#	elif Input.is_action_just_released("Lclick"):
+#		ani_fsm.travel("Idle")
 	
 	if is_on_floor():
 		if Input.is_action_just_pressed("up"):
@@ -160,7 +163,6 @@ func _load(data):
 	cargo_max_weight = data.cargo_max_weight
 	cargo_weight = data.cargo_weight
 
-
 func check_cargo_weight(loot):
 	# if loot to be added wont fit
 	if cargo_weight + (loot.x * loot.y) > cargo_max_weight:
@@ -177,6 +179,7 @@ func add_cargo_entry(loot, tid):
 	var goods = check_cargo_weight(loot)
 	cargo[str(tid)] = { "quantity" : goods.x, "weight" : goods.y}
 	cargo_weight += goods.y
+	Globals.Inventory.call("_on_cargo_added", goods, tid)
 
 func update_cargo_entry(loot, tid):
 	var goods = check_cargo_weight(loot)
@@ -186,6 +189,7 @@ func update_cargo_entry(loot, tid):
 	cur_weight += goods.y
 	cargo[str(tid)] = { "quantity" : cur_quantity, "weight" : cur_weight}
 	cargo_weight += goods.y
+	Globals.Inventory.call("_on_cargo_added", goods, tid)
 
 # loot is a vec2. X contains quantity, Y contains wbase weight
 func update_cargo(loot, tid):
@@ -196,8 +200,19 @@ func update_cargo(loot, tid):
 
 func _on_loot_block(tid):
 	var loot = GameData.get_loot(tid)
+	# loot is tile that doesnt yield any resources
+	if(loot.x == 0 && loot.y == 0):
+		return
 	update_cargo(loot, tid)
 
 func _on_PlayerChar_block_destroyed(tid):
-	
 	pass # Replace with function body.
+
+# If tid = null, eject all else eject tid only
+func eject_cargo(tid):
+	if(tid == null):
+		cargo = {}
+		cargo_weight = 0
+		return
+	# TO DO, implement single tid ejection
+	

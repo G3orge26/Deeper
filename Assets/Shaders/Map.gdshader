@@ -10,7 +10,6 @@ vec4 blend_color(vec4 colorRGBA1, vec4 colorRGBA2){
     return vec4(red,green,blue,alpha);
 }
 
-
 void fragment(){
     //vec4 A = texture(TEXTURE, UV);
 	//vec4 B = vec4(126.0, 100.0, 29.0, 0.5);

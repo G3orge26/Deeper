@@ -47,7 +47,7 @@ func _on_TileMap_tile_drilled(pos, drill_power):
 	if(last_tile_health > last_tile_max_health):
 		$DMG.visible = false
 		set_cellv(cell, TID.Sky)
-		get_parent().get_parent().get_node("Player").get_child(0).emit_signal("block_destroyed", cell_tid)
+		get_node("/root/World/Player").get_child(0).call("_on_loot_block", cell_tid)
 	last_tile_ttl = TILE_DMG_TTL
 	
 func clearDmg():

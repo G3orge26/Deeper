@@ -4,9 +4,19 @@ extends Node
 # about various blocks in the game
 var BlockData = {}
 
+# Array [tid]: blockName, populated after json is read
+var BlockName = []
+
 func _ready():
 	load_block_data()
+	retrieve_names()
 	pass # Replace with function body.
+
+func retrieve_names():
+	for tid in BlockData:
+		var entry = BlockData.get(str(tid))
+		BlockName.push_back(entry.name)
+	pass
 
 func load_block_data():
 	var block_data_file = File.new()
@@ -26,7 +36,10 @@ func get_tid_hp(tid):
 		var block = BlockData[str(tid)]
 		if block.has("hp"):
 			return block["hp"]
-			
+
+func get_tid_as_string(tid):
+	return BlockName[int(tid)]
+
 func get_loot(tid):
 	if BlockData.has(str(tid)):
 		var block = BlockData[str(tid)]
